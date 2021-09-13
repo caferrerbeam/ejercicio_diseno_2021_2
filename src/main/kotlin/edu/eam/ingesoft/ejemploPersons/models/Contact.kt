@@ -1,12 +1,14 @@
 package edu.eam.ingesoft.ejemploPersons.models
 
 import javax.persistence.Column
+import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 import javax.persistence.Table
 
 @Table(name = "tbl_contactos")
+@Entity
 data class Contact(
 
     @Id
