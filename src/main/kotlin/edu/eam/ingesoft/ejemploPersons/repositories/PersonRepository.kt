@@ -1,10 +1,12 @@
 package edu.eam.ingesoft.ejemploPersons.repositories
 
 import edu.eam.ingesoft.ejemploPersons.models.Person
+import org.hibernate.cache.spi.QueryCache
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
+import javax.persistence.Query
 
 @Component //anotacion que nos dice que esta es una clase manejada por springboot
 @Transactional //para que las operaciones sobre la BD funcionen.
@@ -38,4 +40,49 @@ class PersonRepository {
             em.remove(persona)
         }
     }
+
+    fun findAll(): List<Person> {
+        /*
+        Estructura de una consulta:
+        SELECT <proyeccion> FROM <entidad> <objeto> WHERE <predicados>
+        proyeccion: que quiero retornar en la consulta
+        entidad: la entidad que va participar en la consulta
+        objeto: el objeto sobre el cual se van hacer la proyecciones y los predicados, le pueden poner el nombre que quieran
+        predicados: las condiciones de la consulta
+         */
+        val query: Query = em.createQuery("SELECT per FROM Person per")
+
+        //ejecutar la consulta...
+        return query.resultList as List<Person>
+    }
+
+    /**
+     * retornar las personas mayores de edad
+     */
+    fun findAdults(): List<Person> {
+        /**
+         * en los predicados se pueden operadores <, >, =,!=, >=, <=
+         * AND, OR
+         */
+        val query = em.createQuery("SELECT obj FROM Person obj WHERE obj.age>=18")
+
+        return query.resultList as List<Person>
+    }
+
+    /**
+     * Retorna la lista de personas de una ciudad
+     */
+    fun findByCity(city: String): List<Person> {
+        //los parametros se definen en los predicados con : (dos puntos) y el nombre del parametro
+        //por ejemplo "SELECT per FROM Person per WHERE per.city = :city AND per.age > :age" aqui hay parametros
+        //city y age
+        val query = em.createQuery("SELECT per FROM Person per WHERE per.city = :city")
+        //definir el valor de los parametros...
+        query.setParameter("city", city)
+
+        //definirle el valor al parametro
+        return query.resultList as List<Person>
+    }
+
+
 }

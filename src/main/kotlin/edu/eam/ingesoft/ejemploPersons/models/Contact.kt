@@ -37,5 +37,5 @@ data class Contact(
     //modelando una llave foranea
     @ManyToOne //se le puede asignar a una persona cualquier persona de la tabla relacionada
     @JoinColumn(name = "cedula_persona") // es obligatorio si la columna se llama diferente al atributo.
-    val persona: Person
+    val person: Person
 ):Serializable //: es como decir implements en JAVA

@@ -15,4 +15,10 @@ data class Person(
 
     @Column(name = "nombre")
     var name:String,
+
+    @Column(name = "edad")
+    var age: Int? = 0,
+
+    @Column(name = "ciudad")
+    var city: String? = ""
 ): Serializable
