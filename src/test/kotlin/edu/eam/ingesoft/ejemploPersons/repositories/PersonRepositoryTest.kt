@@ -79,13 +79,15 @@ class PersonRepositoryTest {
     fun testUpdate() {
         //prerequisito
         entityManager.persist(Person("3", "claudia",31, "armenia"))
-
-        //ejecutando...
+        entityManager.flush() //persistir cambios al BD inmeditamente
+        // ejecutando...
         val person = entityManager.find(Person::class.java, "3")
         person.name = "gladys"
         person.age = 10
 
+        entityManager.clear() //borrar el entitymanger para que el que haga el update sea nuestro metodo.
         personRepository.update(person)
+
 
         //assersiones
         val personToAssert = entityManager.find(Person::class.java, "3")
@@ -93,6 +95,30 @@ class PersonRepositoryTest {
         Assertions.assertEquals(10, personToAssert.age)
     }
 
+
+    @Test
+    fun testFindByCityAndAgeGreaterThan() {
+        //prerequisitos
+        entityManager.persist(Person("3", "claudia",31, "armenia"))
+        entityManager.persist(Person("4", "camilo",21, "armenia"))
+        entityManager.persist(Person("5", "juan",18, "armenia"))
+        entityManager.persist(Person("6", "juan",18, "cali"))
+        entityManager.persist(Person("7", "juan",18, "cali"))
+
+        //ejecucion de la preubas
+        val list = personRepository.findByCityAndAgeGreaterThan("armenia", 20)
+
+        //assercion
+        Assertions.assertEquals(2, list.size)
+
+        list.forEach { Assertions.assertEquals("armenia",it.city) }
+
+        /*
+        for (Person it: list) {
+        Assertions.assertEquals("armenia",it.city)
+        }
+         */
+    }
 
 
 }

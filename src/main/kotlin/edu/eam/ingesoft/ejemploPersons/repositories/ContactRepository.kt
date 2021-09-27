@@ -19,4 +19,8 @@ class ContactRepository {
 
         return query.resultList as List<Contact>
     }
+
+    fun create(contact: Contact) {
+        entityManager.persist(contact)
+    }
 }

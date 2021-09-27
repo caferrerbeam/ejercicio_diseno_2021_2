@@ -41,6 +41,16 @@ class PersonRepository {
         }
     }
 
+    fun findByName(name: String): Person? {
+        val query = em.createQuery("SELECT per FROM Person per WHERE per.name = :name")
+        query.setParameter("name", name)
+
+        val list = query.resultList as List<Person>
+
+        //asignacion condicional
+        return if (list.isEmpty()) null else list[0]
+    }
+
     fun findAll(): List<Person> {
         /*
         Estructura de una consulta:
@@ -84,5 +94,17 @@ class PersonRepository {
         return query.resultList as List<Person>
     }
 
+    /**
+     * personas de una ciudad cuya edad sea mayor a X
+     */
+    fun findByCityAndAgeGreaterThan(city: String, age: Int) :List<Person> {
+        val query = em.createQuery("SELECT per.age FROM Person per WHERE per.city = :cityPar AND per.age > :agePar")
+        query.setParameter("cityPar", city)
+        query.setParameter("agePar", age)
 
+        return query.resultList as List<Person>
+    }
+
+
+    //select au.book from AuthorBook au WHERE au.author.code = '2' ---> retorna una lista de book
 }
