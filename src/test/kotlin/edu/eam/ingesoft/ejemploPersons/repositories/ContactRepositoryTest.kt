@@ -38,8 +38,7 @@ class ContactRepositoryTest {
         //aserciones
         Assertions.assertEquals(3, contacts.size)
         //contacts.forEachIndexed { i, it -> Assertions.assertEquals("1",it.person.id) }
-        contacts.forEach{ Assertions.assertEquals("1",it.person.id) }
-
+        contacts.forEach{ Assertions.assertEquals("1",it.person?.id) }
     }
 
 }

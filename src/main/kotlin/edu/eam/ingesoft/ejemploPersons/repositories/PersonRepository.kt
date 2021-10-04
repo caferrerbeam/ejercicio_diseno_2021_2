@@ -98,7 +98,7 @@ class PersonRepository {
      * personas de una ciudad cuya edad sea mayor a X
      */
     fun findByCityAndAgeGreaterThan(city: String, age: Int) :List<Person> {
-        val query = em.createQuery("SELECT per.age FROM Person per WHERE per.city = :cityPar AND per.age > :agePar")
+        val query = em.createQuery("SELECT per FROM Person per WHERE per.city = :cityPar AND per.age > :agePar")
         query.setParameter("cityPar", city)
         query.setParameter("agePar", age)
 

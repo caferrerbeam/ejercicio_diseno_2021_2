@@ -2,6 +2,7 @@ package edu.eam.ingesoft.ejemploPersons.services
 
 import edu.eam.ingesoft.ejemploPersons.exceptions.BusinessException
 import edu.eam.ingesoft.ejemploPersons.models.Contact
+import edu.eam.ingesoft.ejemploPersons.models.Person
 import edu.eam.ingesoft.ejemploPersons.repositories.ContactRepository
 import edu.eam.ingesoft.ejemploPersons.repositories.PersonRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,19 +24,23 @@ class ContactService {
      */
 
     fun addContactToPerson(contact: Contact, personId: String) {
-       val person = personRepository.find(personId) ?: throw BusinessException("the person does not exist")
+       val person = personRepository.find(personId)
+           ?: throw BusinessException("The person does not exist")
 
        val contacts = contactRepository.findByPerson(personId)
 
         if (contacts.size == 10) {
-            throw BusinessException("only 10 contacts by person")
+            throw BusinessException("Only 10 contacts by person")
         }
 
-        //busco dentro de la lista si hay una persona con el mismo nombre y telefono de la quiero crear
-        val personByNameAndPhone = contacts.find { it.name == contact.name && it.phone == contact.phone }
+        //busco dentro de la lista si hay una persona
+        // con el mismo nombre y telefono de la quiero crear
+        val personByNameAndPhone = contacts.find {
+            it.name == contact.name && it.phone == contact.phone
+        }
 
         if (personByNameAndPhone != null) {
-            throw BusinessException("repeated contact")
+            throw BusinessException("Repeated contact")
         }
 
         contact.person = person

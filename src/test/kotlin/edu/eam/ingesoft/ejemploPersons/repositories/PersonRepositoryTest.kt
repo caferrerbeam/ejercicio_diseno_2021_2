@@ -111,7 +111,9 @@ class PersonRepositoryTest {
         //assercion
         Assertions.assertEquals(2, list.size)
 
-        list.forEach { Assertions.assertEquals("armenia",it.city) }
+        list.forEach {
+            Assertions.assertEquals("armenia",it.city)
+        }
 
         /*
         for (Person it: list) {
@@ -119,6 +121,4 @@ class PersonRepositoryTest {
         }
          */
     }
-
-
 }
