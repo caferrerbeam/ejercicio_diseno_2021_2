@@ -16,7 +16,7 @@ class PersonService {
      * 1. no pueden haber personas repetidas(por cedula) ni personas con el mismo nombre
      */
     fun createPerson(person: Person) {
-       val personById = personRepository.find(person.id)
+       val personById = personRepository.find(person.id?:"")
 
        if (personById != null) {
            //aqui lanzamos una excepcion de negocio
@@ -52,7 +52,7 @@ class PersonService {
 
         val res = a ?: 1 //si a es null, res = 1
          */
-        personRepository.find(person.id) ?: throw BusinessException("This person does not exist")
+        personRepository.find(person.id?:"") ?: throw BusinessException("This person does not exist")
         personRepository.update(person)
     }
 
@@ -60,4 +60,8 @@ class PersonService {
         personRepository.find(id) ?: throw BusinessException("This person does not exist")
         personRepository.delete(id)
     }
+
+    fun findPerson(id: String) = personRepository.find(id)
+
+    fun getAllPerson() = personRepository.findAll()
 }

@@ -11,7 +11,7 @@ import javax.persistence.Table
 data class Person(
     @Id
     @Column(name = "cedula")
-    val id: String,
+    var id: String? = "",
 
     @Column(name = "nombre")
     var name:String,
