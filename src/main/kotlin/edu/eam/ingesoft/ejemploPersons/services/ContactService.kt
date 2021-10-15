@@ -29,8 +29,8 @@ class ContactService {
 
        val contacts = contactRepository.findByPerson(personId)
 
-        if (contacts.size == 10) {
-            throw BusinessException("Only 10 contacts by person")
+        if (contacts.size >= 3) {
+            throw BusinessException("Only 3 contacts by person")
         }
 
         //busco dentro de la lista si hay una persona
@@ -46,5 +46,7 @@ class ContactService {
         contact.person = person
         contactRepository.create(contact)
     }
+
+    fun findByPerson(idPerson: String) = contactRepository.findByPerson(idPerson)
 
 }

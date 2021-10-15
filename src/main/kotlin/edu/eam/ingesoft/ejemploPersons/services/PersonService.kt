@@ -5,6 +5,7 @@ import edu.eam.ingesoft.ejemploPersons.models.Person
 import edu.eam.ingesoft.ejemploPersons.repositories.PersonRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import javax.persistence.EntityNotFoundException
 
 @Service
 class PersonService {
@@ -52,12 +53,12 @@ class PersonService {
 
         val res = a ?: 1 //si a es null, res = 1
          */
-        personRepository.find(person.id?:"") ?: throw BusinessException("This person does not exist")
+        personRepository.find(person.id?:"") ?: throw EntityNotFoundException("This person does not exist")
         personRepository.update(person)
     }
 
     fun deletePerson(id: String) {
-        personRepository.find(id) ?: throw BusinessException("This person does not exist")
+        personRepository.find(id) ?: throw EntityNotFoundException("This person does not exist")
         personRepository.delete(id)
     }
 
