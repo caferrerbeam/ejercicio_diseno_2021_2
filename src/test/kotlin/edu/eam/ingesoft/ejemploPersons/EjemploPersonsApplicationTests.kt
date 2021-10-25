@@ -1,6 +1,6 @@
 package edu.eam.ingesoft.ejemploPersons
 
-import edu.eam.ingesoft.ejemploPersons.models.Person
+import edu.eam.ingesoft.ejemploPersons.models.entities.Person
 import edu.eam.ingesoft.ejemploPersons.repositories.PersonRepository
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

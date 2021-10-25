@@ -1,7 +1,7 @@
 package edu.eam.ingesoft.ejemploPersons.services
 
 import edu.eam.ingesoft.ejemploPersons.exceptions.BusinessException
-import edu.eam.ingesoft.ejemploPersons.models.Person
+import edu.eam.ingesoft.ejemploPersons.models.entities.Person
 import edu.eam.ingesoft.ejemploPersons.repositories.PersonRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -62,7 +62,7 @@ class PersonService {
         personRepository.delete(id)
     }
 
-    fun findPerson(id: String) = personRepository.find(id)
+    fun findPerson(id: String) = personRepository.find(id) // ?: throw EntityNotFoundException("Not found")
 
     fun getAllPerson() = personRepository.findAll()
 }

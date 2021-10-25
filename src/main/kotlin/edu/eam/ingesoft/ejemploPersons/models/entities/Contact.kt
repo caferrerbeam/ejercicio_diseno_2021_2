@@ -1,4 +1,4 @@
-package edu.eam.ingesoft.ejemploPersons.models
+package edu.eam.ingesoft.ejemploPersons.models.entities
 
 import org.hibernate.validator.constraints.*
 import java.io.Serializable
@@ -30,7 +30,7 @@ data class Contact(
     val id: String,
 
     @field:Length(min=3, max=30)
-    @field:Pattern(regexp = "[a-zA-ZàèìòùÀÈÌÒÙ]*")
+    @field:Pattern(regexp = "[a-zA-ZàèìòùÀÈÌÒÙ ]*")
     @field:NotBlank
     @Column(name = "nombre")
     var name: String,

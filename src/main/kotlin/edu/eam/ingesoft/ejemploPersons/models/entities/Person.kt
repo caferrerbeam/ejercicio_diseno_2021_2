@@ -1,4 +1,4 @@
-package edu.eam.ingesoft.ejemploPersons.models
+package edu.eam.ingesoft.ejemploPersons.models.entities
 
 import java.io.Serializable
 import javax.persistence.Column

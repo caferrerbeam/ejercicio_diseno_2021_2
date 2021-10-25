@@ -1,8 +1,7 @@
 package edu.eam.ingesoft.ejemploPersons.services
 
 import edu.eam.ingesoft.ejemploPersons.exceptions.BusinessException
-import edu.eam.ingesoft.ejemploPersons.models.Contact
-import edu.eam.ingesoft.ejemploPersons.models.Person
+import edu.eam.ingesoft.ejemploPersons.models.entities.Contact
 import edu.eam.ingesoft.ejemploPersons.repositories.ContactRepository
 import edu.eam.ingesoft.ejemploPersons.repositories.PersonRepository
 import org.springframework.beans.factory.annotation.Autowired

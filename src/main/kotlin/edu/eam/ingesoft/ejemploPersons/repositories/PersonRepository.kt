@@ -1,7 +1,6 @@
 package edu.eam.ingesoft.ejemploPersons.repositories
 
-import edu.eam.ingesoft.ejemploPersons.models.Person
-import org.hibernate.cache.spi.QueryCache
+import edu.eam.ingesoft.ejemploPersons.models.entities.Person
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
@@ -21,7 +20,7 @@ class PersonRepository {
     }
 
     //? quiere decir q algo puede ser null
-    fun find(id:String): Person?{
+    fun find(id:String): Person? {
         //se el envia la clase que quiero buscar y el valor de la llave primaria que quiero buscar.
        return em.find(Person::class.java, id) //busca en la bd por llave primaria
     }

@@ -1,8 +1,8 @@
 package edu.eam.ingesoft.ejemploPersons.services
 
 import edu.eam.ingesoft.ejemploPersons.exceptions.BusinessException
-import edu.eam.ingesoft.ejemploPersons.models.Contact
-import edu.eam.ingesoft.ejemploPersons.models.Person
+import edu.eam.ingesoft.ejemploPersons.models.entities.Contact
+import edu.eam.ingesoft.ejemploPersons.models.entities.Person
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -23,7 +23,7 @@ class ContactServiceTest {
     @Test
     fun addContactToPersonPersonNotFoundTest() {
         val contact = Contact("1", "gladys", "123123",
-            "no se", null)
+            "no se", "correo@correo.com",null)
         val exc = Assertions.assertThrows(
             BusinessException::class.java,
             {
@@ -40,11 +40,13 @@ class ContactServiceTest {
         entityManager.persist(person)
 
         for (i in 1..10) {
-            entityManager.persist(Contact(
+            entityManager.persist(
+                Contact(
                 "$i",
                 "name"+i,
                 "phone${i}",
-                "address$i", person))
+                "address$i", "correo@correo.com", person)
+            )
         }
 
         val exc = Assertions.assertThrows(
@@ -53,7 +55,7 @@ class ContactServiceTest {
             contactService.addContactToPerson(
                 Contact(
                     "1",
-                    "juan", "97987", "dir", null
+                    "juan", "97987", "dir","correo@correo.com", null
                 ),
                 "1"
             )
@@ -67,13 +69,16 @@ class ContactServiceTest {
         val person = Person("1", "gladys", 10, "Armenia")
         entityManager.persist(person)
 
-        entityManager.persist(Contact(
+        entityManager.persist(
+            Contact(
             "1",
             "claudia",
             "12341234",
             "direccion",
+            "correo@correo.com",
             person,
-        ))
+        )
+        )
 
         val exc = Assertions.assertThrows(
             BusinessException::class.java
@@ -83,7 +88,9 @@ class ContactServiceTest {
                     "2",
                     "claudia",
                     "12341234",
-                    "dir", null
+                    "dir",
+                    "correo@correo.com",
+                    null
                 ),
                 "1"
             )
@@ -101,7 +108,9 @@ class ContactServiceTest {
                 "2",
                 "claudia",
                 "12341234",
-                "dir", null
+                "dir",
+                "correo@correo.com",
+                null
             ),
             "1"
         )

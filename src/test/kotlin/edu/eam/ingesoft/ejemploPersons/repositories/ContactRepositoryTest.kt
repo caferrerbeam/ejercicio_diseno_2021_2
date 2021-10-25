@@ -1,7 +1,7 @@
 package edu.eam.ingesoft.ejemploPersons.repositories
 
-import edu.eam.ingesoft.ejemploPersons.models.Contact
-import edu.eam.ingesoft.ejemploPersons.models.Person
+import edu.eam.ingesoft.ejemploPersons.models.entities.Contact
+import edu.eam.ingesoft.ejemploPersons.models.entities.Person
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,10 +27,10 @@ class ContactRepositoryTest {
         entityManager.persist(person)
         entityManager.persist(person2)
 
-        entityManager.persist(Contact("1","camilo", "3008765678", "por ahi lejos", person))
-        entityManager.persist(Contact("2","juan", "436456456", "jummmm", person))
-        entityManager.persist(Contact("3","fabian", "253452345", "ni idea donde vive", person))
-        entityManager.persist(Contact("4","patricia", "23453245", "no se", person2))
+        entityManager.persist(Contact("1","camilo", "3008765678", "por ahi lejos", "correo@correo.com",person))
+        entityManager.persist(Contact("2","juan", "436456456", "jummmm", "correo@correo.com",person))
+        entityManager.persist(Contact("3","fabian", "253452345", "ni idea donde vive", "correo@correo.com",person))
+        entityManager.persist(Contact("4","patricia", "23453245", "no se", "correo@correo.com",person2))
 
         //ejecutar la prueba
         val contacts = contactRepository.findByPerson("1")

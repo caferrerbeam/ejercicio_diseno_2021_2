@@ -1,7 +1,7 @@
 package edu.eam.ingesoft.ejemploPersons.services
 
 import edu.eam.ingesoft.ejemploPersons.exceptions.BusinessException
-import edu.eam.ingesoft.ejemploPersons.models.Person
+import edu.eam.ingesoft.ejemploPersons.models.entities.Person
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

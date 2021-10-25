@@ -1,6 +1,6 @@
 package edu.eam.ingesoft.ejemploPersons.repositories
 
-import edu.eam.ingesoft.ejemploPersons.models.Contact
+import edu.eam.ingesoft.ejemploPersons.models.entities.Contact
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
