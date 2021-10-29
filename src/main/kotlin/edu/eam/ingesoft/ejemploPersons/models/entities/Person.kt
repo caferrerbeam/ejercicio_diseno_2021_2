@@ -14,7 +14,7 @@ data class Person(
     var id: String? = "",
 
     @Column(name = "nombre")
-    var name:String,
+    var name: String? = "",
 
     @Column(name = "edad")
     var age: Int? = 0,

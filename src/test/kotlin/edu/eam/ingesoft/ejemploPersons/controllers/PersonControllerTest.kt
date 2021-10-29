@@ -121,31 +121,7 @@ class PersonControllerTest {
 
     @Test
     fun createContactMoreThan3ContactsFoundTest() {
-        val person = Person("1", "gladys", 10, "Armenia")
-        entityManager.persist(person)
-        entityManager.persist(
-            Contact(
-                "1",
-                "appa",
-                "1231231234",
-                "la patagonia", "correo@correo.com", person)
-        )
-
-        entityManager.persist(
-            Contact(
-                "2",
-                "juana",
-                "1231231235",
-                "la patagonia", "correo@correo.com", person)
-        )
-
-        entityManager.persist(
-            Contact(
-                "3",
-                "mauricia",
-                "1231231235",
-                "la patagonia", "correo@correo.com", person)
-        )
+        createContacts()
         val body = """
            {
             "id": "35345",
@@ -166,6 +142,37 @@ class PersonControllerTest {
         Assertions.assertEquals(412, resp.status)
         Assertions.assertEquals("{\"message\":\"Only 3 contacts by person\",\"code\":412}".trimIndent(),
             resp.contentAsString)
+    }
+
+    private fun createContacts() {
+        val person = Person("1", "gladys", 10, "Armenia")
+        entityManager.persist(person)
+        entityManager.persist(
+            Contact(
+                "1",
+                "appa",
+                "1231231234",
+                "la patagonia", "correo@correo.com", person
+            )
+        )
+
+        entityManager.persist(
+            Contact(
+                "2",
+                "juana",
+                "1231231235",
+                "la patagonia", "correo@correo.com", person
+            )
+        )
+
+        entityManager.persist(
+            Contact(
+                "3",
+                "mauricia",
+                "1231231235",
+                "la patagonia", "correo@correo.com", person
+            )
+        )
     }
 
     @Test
@@ -200,6 +207,30 @@ class PersonControllerTest {
         Assertions.assertEquals(412, resp.status)
         Assertions.assertEquals("{\"message\":\"Repeated contact\",\"code\":412}".trimIndent(),
             resp.contentAsString)
+    }
+
+    @Test
+    fun getContactsByPersonHappyPath() {
+        //prerrequisitos
+        createContacts()
+
+        val request = MockMvcRequestBuilders
+            .get("/persons/1/contacts")
+            .contentType(MediaType.APPLICATION_JSON)
+
+        val response = mocMvc.perform(request)
+        val resp = response.andReturn().response
+
+        println(resp.contentAsString)
+
+        val contact = objectMapper.readValue(resp.contentAsString, Array<Contact>::class.java)
+        Assertions.assertEquals(200, resp.status)
+
+        Assertions.assertEquals(3, contact.size)
+
+        contact.forEach {
+            Assertions.assertEquals("1", it.person?.id)
+        }
     }
 
 

@@ -24,7 +24,7 @@ class PersonService {
            throw BusinessException("This person already exists")
        }
 
-       val personByName = personRepository.findByName(person.name)
+       val personByName = personRepository.findByName(person.name!!)
 
         if (personByName != null) {
             //aqui lanzamos una excepcion de negocio

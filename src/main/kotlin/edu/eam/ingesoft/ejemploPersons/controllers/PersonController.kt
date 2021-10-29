@@ -3,6 +3,8 @@ package edu.eam.ingesoft.ejemploPersons.controllers
 import edu.eam.ingesoft.ejemploPersons.models.entities.Contact
 import edu.eam.ingesoft.ejemploPersons.models.entities.Person
 import edu.eam.ingesoft.ejemploPersons.models.requests.BorrowBookRequest
+import edu.eam.ingesoft.ejemploPersons.models.requests.CreateContactRequest
+import edu.eam.ingesoft.ejemploPersons.models.requests.GetContactsResponse
 import edu.eam.ingesoft.ejemploPersons.services.ContactService
 import edu.eam.ingesoft.ejemploPersons.services.PersonService
 import org.springframework.beans.factory.annotation.Autowired
@@ -72,6 +74,10 @@ class PersonController {
         @DeleteMapping("/{id}")
         fun deletePerson(@PathVariable id: String) = personService.deletePerson(id)
 
+    //  POST /borrows/users/{{iduser}}/books/{{idbook}} (x)
+    // POST /users/{{iduser}}/borrows/books/{{idbook}}  (?)
+    // POST /books/{{idbook}}/users/{{iduser}}/borrow   (*)
+
         //contacts/{{id}} ---> GET /contacts/1--> expresando es el contacto con id X
         //los contactos de una persona  GET /persons/{{id}}/contacts
         //todos los contactos  GET /persons/contacts (estaria esperando la info de las personas) , GET /contacts (solo la info de los contacts
@@ -85,7 +91,44 @@ class PersonController {
                           @Validated @RequestBody contact: Contact
         ) = contactService.addContactToPerson(contact, idPersona)
 
-        fun borrowBook(@Validated @RequestBody borrow: BorrowBookRequest) {
+    /**
+     * {
+     *    idContact: "1231",
+     *    personId: "1",
+     *    contactName: "juan",
+     *    "contactPhone":"123123",
+     *    contactEmail: "sdflksjd@kfsjlf.com
+     *    contactAddress: "en la patagonia"
+     * }
+     */
 
+    @PostMapping("/contacts")
+    fun createContactV2(@RequestBody contactRequest: CreateContactRequest) {
+        val contact = Contact(contactRequest.idContact,
+            contactRequest.contactName,
+            contactRequest.contactPhone, contactRequest.contactAddress, contactRequest.contactMail, Person(contactRequest.personId)
+        )
+
+        contactService.addContactToPerson(contact, contactRequest.personId)
+    }
+
+    /**
+     * [
+     * {contactName: "juan", contactPhone: "123123"},
+     * {contactName: "claudia", contactPhone: "24343"}
+     * ]
+     */
+    @GetMapping("/{id}/contacts/v2")
+    fun getContactsByPersonV2(@PathVariable("id") idPersona: String): List<GetContactsResponse>{
+        val contacts = contactService.findByPerson(idPersona)
+
+        val response = contacts.map {
+            GetContactsResponse(it.name, it.phone)
         }
+
+        return response
+    }
+
+
+
 }
