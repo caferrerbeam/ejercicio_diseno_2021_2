@@ -34,6 +34,14 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
+tasks.getByName<Jar>("jar") {
+	enabled = false
+	manifest {
+		attributes["Main-Class"] = "edu.eam.ingesoft.ejemploPersons.EjemploPersonsApplication"
+	}
+}
+
+
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
